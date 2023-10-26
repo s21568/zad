@@ -15,11 +15,9 @@ public class File {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @Column(unique = true)
     private String fileName;
     private long size;
-
     @ElementCollection
     private List<String> folders;
 }

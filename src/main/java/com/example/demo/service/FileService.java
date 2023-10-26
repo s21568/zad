@@ -1,26 +1,40 @@
 package com.example.demo.service;
 
+import com.example.demo.exception.FileNotFoundException;
 import com.example.demo.model.File;
-import org.springframework.stereotype.Service;
 import com.example.demo.repository.FileRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class FileService {
 
-    private FileRepository fileRepository;
+    private final FileRepository fileRepository;
+
+    public FileService(FileRepository fileRepository) {
+        this.fileRepository = fileRepository;
+    }
 
     public List<File> getAllFiles() {
         return fileRepository.findAll();
+    } //only for testing :)
+
+    public File getFileById(long id) {
+        return fileRepository.findById(id).
+                orElseThrow(()->new FileNotFoundException("File not found"));
     }
 
-    public Optional<File> getFileByFilename(String fileName) {
-        return fileRepository.findByFileName(fileName);
+    public File getFileByFilename(String fileName) {
+        return fileRepository.findByFileName(fileName).
+                orElseThrow(()->new FileNotFoundException("File not found"));
     }
 
-    public File saveFile(File file) {
+    public File addFile(File file) {
+        return fileRepository.save(file);
+    }
+
+    public File updateFile(File file) {
         return fileRepository.save(file);
     }
 
