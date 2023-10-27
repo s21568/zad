@@ -1,13 +1,14 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.File;
+import com.example.demo.model.Folder;
+import com.example.demo.service.FileService;
+import com.example.demo.service.FolderService;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.example.demo.service.FileService;
 
 import java.util.List;
 
@@ -17,6 +18,7 @@ import java.util.List;
 public class FileController {
 
     private final FileService fileService;
+    private final FolderService folderService;
 
     @GetMapping("/getAll") //only for testing :)
     public ResponseEntity<List<File>> getAllFiles(){
@@ -24,7 +26,7 @@ public class FileController {
         return new ResponseEntity<>(fileList, HttpStatus.OK);
     }
     @GetMapping("/get/fileId/{id}")
-    public ResponseEntity<File> getFileByName(@PathVariable("id") long id){
+    public ResponseEntity<File> getFileById(@PathVariable("id") long id){
         File file= fileService.getFileById(id);
         return new ResponseEntity<>(file, HttpStatus.OK);
     }
@@ -48,5 +50,16 @@ public class FileController {
     public ResponseEntity<File> deleteFileById(@PathVariable("id") Long id){
         fileService.deleteFile(id);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PutMapping("/update/{fileName}/folder/{folderName}")
+    public ResponseEntity<File> addFolderToFile(
+            @PathVariable("fileName") String fileName,
+            @PathVariable("folderName") String folderName){
+        File file = fileService.getFileByFilename(fileName);
+        Folder folder = folderService.getFolderByName(folderName);
+        file.addFolderToList(folder);
+        fileService.updateFile(file);
+        return new ResponseEntity<>(file, HttpStatus.OK);
     }
 }
