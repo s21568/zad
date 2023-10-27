@@ -2,6 +2,8 @@ package com.example.demo.controller;
 
 import com.example.demo.model.File;
 import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,13 +13,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/file")
+@AllArgsConstructor
 public class FileController {
 
     private final FileService fileService;
-
-    public FileController(FileService fileService) {
-        this.fileService = fileService;
-    }
 
     @GetMapping("/getAll") //only for testing :)
     public ResponseEntity<List<File>> getAllFiles(){

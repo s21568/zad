@@ -3,18 +3,16 @@ package com.example.demo.service;
 import com.example.demo.exception.FileNotFoundException;
 import com.example.demo.model.File;
 import com.example.demo.repository.FileRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class FileService {
 
     private final FileRepository fileRepository;
-
-    public FileService(FileRepository fileRepository) {
-        this.fileRepository = fileRepository;
-    }
 
     public List<File> getAllFiles() {
         return fileRepository.findAll();
