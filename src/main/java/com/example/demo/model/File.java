@@ -18,6 +18,16 @@ public class File {
     @Column(unique = true)
     private String fileName;
     private long size;
+
+    @OneToMany
+    private List<Folder> optionalFolders; // (eg. photos, text files, top secret, etc.)
+
+    /*
     @ElementCollection
-    private List<String> folders;
+    private List<String> optionalFiles; // (eg. photos, text files, top secret, etc.)
+     */
+    @ManyToOne
+    @JoinColumn(name = "folder_id")
+    private Folder folder;
+
 }

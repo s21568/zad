@@ -19,7 +19,7 @@ public class FileController {
         this.fileService = fileService;
     }
 
-    @GetMapping("/getAll")
+    @GetMapping("/getAll") //only for testing :)
     public ResponseEntity<List<File>> getAllFiles(){
         List<File> fileList = fileService.getAllFiles();
         return new ResponseEntity<>(fileList, HttpStatus.OK);
@@ -40,7 +40,7 @@ public class FileController {
         return new ResponseEntity<>(file, HttpStatus.CREATED);
     }
     @PutMapping("/update")
-    public ResponseEntity<File> updateAddress(@RequestBody File file){
+    public ResponseEntity<File> updateFile(@RequestBody File file){
         fileService.updateFile(file);
         return new ResponseEntity<>(file, HttpStatus.OK);
     }
