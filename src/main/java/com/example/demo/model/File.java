@@ -8,7 +8,6 @@ import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Entity
 @NoArgsConstructor
@@ -24,29 +23,21 @@ public class File {
 
     @OneToMany
     private List<Folder> optionalFolders; // (eg. photos, text files, top secret, etc.)
-
-    /*
-    @ElementCollection
-    private List<String> optionalFiles; // (eg. photos, text files, top secret, etc.)
-     */
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "folder_id")
     private Folder folder;
 
-    public void addFolderToList(Folder folder){
+    public void addFolderToList(Folder folder) {
         if (optionalFolders == null) {
             optionalFolders = new ArrayList<>();
         }
-
         if (folder.equals(this.folder)) {
             throw new IllegalArgumentException("Nie można dodać bieżącego folderu jako opcjonalnego.");
         }
-
         if (!optionalFolders.contains(folder)) {
             optionalFolders.add(folder);
-        }
-        else {
+        } else {
             throw new IllegalArgumentException("Ten folder jest już dodany jako opcjonalny.");
         }
     }

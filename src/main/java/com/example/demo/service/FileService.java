@@ -13,19 +13,20 @@ import java.util.List;
 public class FileService {
 
     private final FileRepository fileRepository;
+    private final FolderService folderService;
 
     public List<File> getAllFiles() {
         return fileRepository.findAll();
     } //only for testing :)
 
     public File getFileById(long id) {
-        return fileRepository.findById(id).
-                orElseThrow(()->new FileNotFoundException("File not found"));
+        return fileRepository.findById(id)
+                .orElseThrow(() -> new FileNotFoundException("File not found"));
     }
 
     public File getFileByFilename(String fileName) {
-        return fileRepository.findByFileName(fileName).
-                orElseThrow(()->new FileNotFoundException("File not found"));
+        return fileRepository.findByFileName(fileName)
+                .orElseThrow(() -> new FileNotFoundException("File not found"));
     }
 
     public File addFile(File file) {
@@ -36,7 +37,14 @@ public class FileService {
         return fileRepository.save(file);
     }
 
-    public void deleteFile(Long id) {
+    public Long deleteFile(Long id) {
         fileRepository.deleteById(id);
+        return id;
+    }
+
+    public File addFolderToFile(String fileName, String folderName) {
+        File file = getFileByFilename(fileName);
+        file.addFolderToList(folderService.getFolderByName(folderName));
+        return updateFile(file);
     }
 }

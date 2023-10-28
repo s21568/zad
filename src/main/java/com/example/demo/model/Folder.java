@@ -39,24 +39,19 @@ public class Folder {
         if (file.getFolder() != null && !file.getFolder().equals(this)) {
             throw new IllegalArgumentException("Ten plik jest już przypisany do innego folderu.");
         }
-
-        if (!files.contains(file)) {
-            files.add(file); // Dodaj plik do listy plików w folderze
-            file.setFolder(this); // Ustaw plikowi ten folder
-        }
+        //Sprawdzenie czy files posiada file w lini 35
+        files.add(file); // Dodaj plik do listy plików w folderze
+        file.setFolder(this); // Ustaw plikowi ten folder
     }
-
 
 
     public void addParentFolder(Folder parentFolder) {
         if (parentFolder.equals(this)) {
             throw new IllegalArgumentException("Nie można dodać samego siebie jako folderu nadrzędnego.");
         }
-
         if (parentFolder.isDescendantOf(this)) {
             throw new IllegalArgumentException("Nie można utworzyć cyklicznego poddrzewa.");
         }
-
         this.setParentFolder(parentFolder);
     }
 
@@ -64,11 +59,9 @@ public class Folder {
         if (childFolder.equals(this)) {
             throw new IllegalArgumentException("Nie można dodać samego siebie jako folderu podrzędnego.");
         }
-
         if (childFolder.isAncestorOf(this)) {
             throw new IllegalArgumentException("Nie można utworzyć cyklicznego poddrzewa.");
         }
-
         if (!childrenFolders.contains(childFolder)) {
             childrenFolders.add(childFolder);
             childFolder.setParentFolder(this);
@@ -89,7 +82,6 @@ public class Folder {
     private boolean isDescendantOf(Folder potentialAncestor) {
         return potentialAncestor.isAncestorOf(this);
     }
-
 
 
 }
