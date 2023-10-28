@@ -2,8 +2,8 @@ package com.example.demo.controller;
 
 import com.example.demo.model.File;
 import com.example.demo.service.FileService;
-import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,6 +31,7 @@ public class FileController {
     }
 
     @PostMapping("/add")
+    @ResponseStatus(HttpStatus.CREATED)
     public File addFile(@RequestBody File file) {
         return fileService.addFile(file);
     }
@@ -41,7 +42,6 @@ public class FileController {
     }
 
     @DeleteMapping("/delete/{id}")
-    @Transactional
     public Long deleteFileById(@PathVariable("id") Long id) {
         return fileService.deleteFile(id);
     }

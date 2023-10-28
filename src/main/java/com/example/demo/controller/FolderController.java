@@ -2,8 +2,8 @@ package com.example.demo.controller;
 
 import com.example.demo.model.Folder;
 import com.example.demo.service.FolderService;
-import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,6 +31,7 @@ public class FolderController {
     }
 
     @PostMapping("/add")
+    @ResponseStatus(HttpStatus.CREATED)
     public Folder addFolder(@RequestBody Folder folder) {
         return folderService.addFolder(folder);
     }
@@ -41,7 +42,6 @@ public class FolderController {
     }
 
     @DeleteMapping("/delete/{id}")
-    @Transactional
     public Long deleteFolderById(@PathVariable("id") Long id) {
         return folderService.deleteFolder(id);
     }

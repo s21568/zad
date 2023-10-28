@@ -7,6 +7,7 @@ import com.example.demo.model.Folder;
 import com.example.demo.repository.FolderRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -17,39 +18,47 @@ public class FolderService {
     private FolderRepository folderRepository;
     private FileService fileService;
 
+    @Transactional
     public List<Folder> getAllFolders() {
         return folderRepository.findAll();
     }
 
+    @Transactional
     public Folder getFolderByName(String name) {
         return folderRepository.findByFolderName(name)
                 .orElseThrow(() -> new FileNotFoundException("Folder not found"));
     }
 
+    @Transactional
     public Folder getFolderById(long id) {
         return folderRepository.findById(id)
                 .orElseThrow(() -> new FolderNotFoundException("Folder not found"));
     }
 
+    @Transactional
     public Folder addFolder(Folder folder) {
         return folderRepository.save(folder);
     }
 
+    @Transactional
     public Folder updateFolder(Folder folder) {
         return folderRepository.save(folder);
     }
 
+    @Transactional
     public Long deleteFolder(Long id) {
         folderRepository.deleteById(id);
         return id;
     }
 
+    @Transactional
     public Folder addFileToFolder(String folderName, String fileName) {
         Folder folder = getFolderByName(folderName);
         folder.addFileToFolder(fileService.getFileByFilename(fileName));
         return updateFolder(folder);
     }
 
+    @Transactional
     public Folder addChildFolderToFolder(String parentFolderName, String childFolderName) {
         Folder parentFolder = getFolderByName(parentFolderName);
         Folder childFolder = getFolderByName(childFolderName);
@@ -57,6 +66,7 @@ public class FolderService {
         return updateFolder(parentFolder);
     }
 
+    @Transactional
     public Folder addParentFolderToFolder(String childFolderName, String parentFolderName) {
         Folder childFolder = getFolderByName(childFolderName);
         Folder parentFolder = getFolderByName(parentFolderName);
