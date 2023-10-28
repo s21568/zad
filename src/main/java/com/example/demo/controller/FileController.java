@@ -19,33 +19,33 @@ public class FileController {
     private final FileService fileService;
 
     @GetMapping("/getAll") //only for testing :)
-    public ResponseEntity<List<File>> getAllFiles() {
-        return new ResponseEntity<>(fileService.getAllFiles(), HttpStatus.OK);
+    public List<File> getAllFiles() {
+        return fileService.getAllFiles();
     }
 
     @GetMapping("/get/fileId/{id}")
-    public ResponseEntity<File> getFileByName(@PathVariable("id") long id) {
-        return new ResponseEntity<>(fileService.getFileById(id), HttpStatus.OK);
+    public File getFileByName(@PathVariable("id") long id) {
+        return fileService.getFileById(id);
     }
 
     @GetMapping("/get/fileName/{fileName}")
-    public ResponseEntity<File> getFileByName(@PathVariable("fileName") String fileName) {
-        return new ResponseEntity<>(fileService.getFileByFilename(fileName), HttpStatus.OK);
+    public File getFileByName(@PathVariable("fileName") String fileName) {
+        return fileService.getFileByFilename(fileName);
     }
 
     @PostMapping("/add")
-    public ResponseEntity<File> addFile(@RequestBody File file) {
-        return new ResponseEntity<>(fileService.addFile(file), HttpStatus.CREATED);
+    @ResponseStatus(HttpStatus.CREATED)
+    public File addFile(@RequestBody File file) {
+        return fileService.addFile(file);
     }
 
     @PutMapping("/update")
-    public ResponseEntity<File> updateFile(@RequestBody File file) {
-        return new ResponseEntity<>(fileService.updateFile(file), HttpStatus.OK);
+    public File updateFile(@RequestBody File file) {
+        return fileService.updateFile(file);
     }
 
     @DeleteMapping("/delete/{id}")
-    @Transactional
-    public ResponseEntity<Long> deleteFileById(@PathVariable("id") Long id) {
-        return new ResponseEntity<>(fileService.deleteFile(id), HttpStatus.OK);
+    public Long deleteFileById(@PathVariable("id") Long id) {
+        return fileService.deleteFile(id);
     }
 }
