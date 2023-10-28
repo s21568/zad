@@ -20,12 +20,12 @@ public class FileService {
 
     public File getFileById(long id) {
         return fileRepository.findById(id).
-                orElseThrow(()->new FileNotFoundException("File not found"));
+                orElseThrow(() -> new FileNotFoundException("File not found"));
     }
 
     public File getFileByFilename(String fileName) {
         return fileRepository.findByFileName(fileName).
-                orElseThrow(()->new FileNotFoundException("File not found"));
+                orElseThrow(() -> new FileNotFoundException("File not found"));
     }
 
     public File addFile(File file) {
@@ -36,7 +36,8 @@ public class FileService {
         return fileRepository.save(file);
     }
 
-    public void deleteFile(Long id) {
+    public Long deleteFile(Long id) {
         fileRepository.deleteById(id);
+        return id;
     }
 }
